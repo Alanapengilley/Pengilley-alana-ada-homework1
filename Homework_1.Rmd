@@ -2,29 +2,141 @@
 title: 'Homework #1'
 author: "Alana Pengilley"
 date: "01/03/2021"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Challenge 1
+
+```{r}
+
+library(readr)
+library(tidyverse)
+library(dplyr)
+
+#load in data
+f <- "~/Desktop/Documents/UT Austin/Spring 2021/ANT388_Applied data analysis/Development/Repos/Pengilley-alana-ada-homework1/darwin.txt"
+d <- read.delim(f, header = TRUE, sep = "\n", stringsAsFactors = FALSE, fill = TRUE)
+
+(dim(d)) #to show how many paragraphs/rows there are (n=56)
+
+(r <- unlist(d[34,])) #converting row 34 into a vector and printing 
+
+#splitting 34th row 
+
+library(stringr)
+
+r34 <- tolower(gsub("[[:punct:]]","", r))
+split <- str_split(r34_lower, " ")
+split
+
+
+#number of unique variables 
+unique_split <- unique(unlist(split)) 
+length(unique_split)
+
+#most common word (the)
+sort(table(split),decreasing=TRUE)
+
+
+#words that appear once
+counts <- table(split)
+(single <- names(counts)[counts == 1])
+
+#words that appear more than five times
+
+
+
+
+
+#extract final paragraph and assign to new variable
+final_quote <-d[56,]
+(split_quote <- unlist(str_split(final_quote, " ")))
+
+
+#third element
+(every_third <- split_quote[seq(3, length(split_quote), 3)])
+
+#sort into reverse alphabetical order 
+(sort(every_third, decreasing = TRUE))
+
 ```
 
-## R Markdown
+## Challenge 2
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+``` {r}
+t <- c(35, 88, 42, 84, 81, 30)
+city <- c("Bejing", "Lagos", "Paris", "Rio de Janeiro", "San Juan", "Toronto")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+names(t) <- city
+print(t)
 
-```{r cars}
-summary(cars)
+#first three city temps 
+(t[1:3])
+
+#temp of Paris and San Juan
+(t[c(3, 5)])
+
 ```
 
-## Including Plots
+## Challenge 3 
 
-You can also embed plots, for example:
+``` {r}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+#Challenge 3a
+m1 <- matrix(
+  data = c(160:1),
+  nrow = 8, 
+  ncol = 20,
+  byrow = FALSE
+)
+m1
+
+#extract single element
+m1[5, 2]
+
+#extract rows
+m1[5:7, ]
+
+#extract and create new variable
+m2 <- m1[3:6, 4:9]
+m2
+
+#class and mode of m2
+(class(m2))
+(mode(m2))
+
+#Challenge 3b 
+
+d <- seq(from = 2, to = 800, by = 2)
+a <- array(data = d, dim = c(5, 5, 4, 4), dimnames = NULL)
+a
+
+(a[1, 1, 1, 2])
+
+(a[2, 3, 2, ])
+
+(a[1:5, 1:5, 3, 3])
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Challenge 4 
+
+``` {r}
+#creating a list called Primates 
+Primates <- list(Strepsirhini = list(Lorisiformes = list(Lorisidae = c("Lorisidae", "Galagidae")),
+                                   Lemuriformes = list(Lorisoidae = c("Cheirogaleidae", "Lepilemuridae", "Indriidae", "Lemuridae", "Daubentoniidae"))),
+                 Haplorhini = list(Tarsiiformes = list(Tarsioidea = "Tarsiidae"),
+                                  Simiiformes = list(Platyrrhini = list(Ceboidea = c("Cebidae", "Atelidae", "Pitheciidae")),
+                                                     Catarrhin = list(Hominoidae = c("Hylobatidae", "Hominidae"), "Cercopithecoidae" = "Cercopithecidae")))
+)
+
+#New World Monkeys 
+(nwm <- Primates[["Haplorhini"]][["Simiiformes"]][["Platyrrhini"]])
+class(nwm)
+mode(nwm) 
+
+#Extracting the tarisers 
+Primates$Haplorhini$Tarsiiformes$Tarsioidea
+```

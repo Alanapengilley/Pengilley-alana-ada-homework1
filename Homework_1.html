@@ -212,192 +212,40 @@ library(tidyverse)</code></pre>
 
 #load in data
 f &lt;- &quot;~/Desktop/Documents/UT Austin/Spring 2021/ANT388_Applied data analysis/Development/Repos/Pengilley-alana-ada-homework1/darwin.txt&quot;
-d &lt;- read.delim(f, header = TRUE, sep = &quot;\t&quot;, stringsAsFactors = FALSE, fill = TRUE)
+d &lt;- read.delim(f, header = TRUE, sep = &quot;\n&quot;, stringsAsFactors = FALSE, fill = TRUE)
 
-dim(d) #to show how many paragraphs/rows there are (n=56)</code></pre>
+(dim(d)) #to show how many paragraphs/rows there are (n=56)</code></pre>
 <pre><code>## [1] 56  1</code></pre>
-<pre class="r"><code>(r &lt;- as.character(as.vector(d[34,]))) #converting row 34 into a vector and printing </code></pre>
+<pre class="r"><code>#print 34th row 
+d[34, ]</code></pre>
 <pre><code>## [1] &quot;The fact, as we have seen, that all past and present organic beings can be arranged within a few great classes, in groups subordinate to groups, and with the extinct groups often falling in between the recent groups, is intelligible on the theory of natural selection with its contingencies of extinction and divergence of character. On these same principles we see how it is that the mutual affinities of the forms within each class are so complex and circuitous. We see why certain characters are far more serviceable than others for classification; why adaptive characters, though of paramount importance to the beings, are of hardly any importance in classification; why characters derived from rudimentary parts, though of no service to the beings, are often of high classificatory value; and why embryological characters are often the most valuable of all. The real affinities of all organic beings, in contradistinction to their adaptive resemblances, are due to inheritance or community of descent. The Natural System is a genealogical arrangement, with the acquired grades of difference, marked by the terms, varieties, species, genera, families, etc.; and we have to discover the lines of descent by the most permanent characters, whatever they may be, and of however slight vital importance.&quot;</code></pre>
-<pre class="r"><code>#splitting 34th row 
-
+<pre class="r"><code>#splitting the whole chapter 
 library(stringr)
 
-r34 &lt;- gsub(&quot;[[:punct:]]&quot;,&quot;&quot;, r)
-r34_lower &lt;- tolower(r34)
-split &lt;- str_split(r34_lower, &quot; &quot;)
-split</code></pre>
-<pre><code>## [[1]]
-##   [1] &quot;the&quot;               &quot;fact&quot;              &quot;as&quot;               
-##   [4] &quot;we&quot;                &quot;have&quot;              &quot;seen&quot;             
-##   [7] &quot;that&quot;              &quot;all&quot;               &quot;past&quot;             
-##  [10] &quot;and&quot;               &quot;present&quot;           &quot;organic&quot;          
-##  [13] &quot;beings&quot;            &quot;can&quot;               &quot;be&quot;               
-##  [16] &quot;arranged&quot;          &quot;within&quot;            &quot;a&quot;                
-##  [19] &quot;few&quot;               &quot;great&quot;             &quot;classes&quot;          
-##  [22] &quot;in&quot;                &quot;groups&quot;            &quot;subordinate&quot;      
-##  [25] &quot;to&quot;                &quot;groups&quot;            &quot;and&quot;              
-##  [28] &quot;with&quot;              &quot;the&quot;               &quot;extinct&quot;          
-##  [31] &quot;groups&quot;            &quot;often&quot;             &quot;falling&quot;          
-##  [34] &quot;in&quot;                &quot;between&quot;           &quot;the&quot;              
-##  [37] &quot;recent&quot;            &quot;groups&quot;            &quot;is&quot;               
-##  [40] &quot;intelligible&quot;      &quot;on&quot;                &quot;the&quot;              
-##  [43] &quot;theory&quot;            &quot;of&quot;                &quot;natural&quot;          
-##  [46] &quot;selection&quot;         &quot;with&quot;              &quot;its&quot;              
-##  [49] &quot;contingencies&quot;     &quot;of&quot;                &quot;extinction&quot;       
-##  [52] &quot;and&quot;               &quot;divergence&quot;        &quot;of&quot;               
-##  [55] &quot;character&quot;         &quot;on&quot;                &quot;these&quot;            
-##  [58] &quot;same&quot;              &quot;principles&quot;        &quot;we&quot;               
-##  [61] &quot;see&quot;               &quot;how&quot;               &quot;it&quot;               
-##  [64] &quot;is&quot;                &quot;that&quot;              &quot;the&quot;              
-##  [67] &quot;mutual&quot;            &quot;affinities&quot;        &quot;of&quot;               
-##  [70] &quot;the&quot;               &quot;forms&quot;             &quot;within&quot;           
-##  [73] &quot;each&quot;              &quot;class&quot;             &quot;are&quot;              
-##  [76] &quot;so&quot;                &quot;complex&quot;           &quot;and&quot;              
-##  [79] &quot;circuitous&quot;        &quot;we&quot;                &quot;see&quot;              
-##  [82] &quot;why&quot;               &quot;certain&quot;           &quot;characters&quot;       
-##  [85] &quot;are&quot;               &quot;far&quot;               &quot;more&quot;             
-##  [88] &quot;serviceable&quot;       &quot;than&quot;              &quot;others&quot;           
-##  [91] &quot;for&quot;               &quot;classification&quot;    &quot;why&quot;              
-##  [94] &quot;adaptive&quot;          &quot;characters&quot;        &quot;though&quot;           
-##  [97] &quot;of&quot;                &quot;paramount&quot;         &quot;importance&quot;       
-## [100] &quot;to&quot;                &quot;the&quot;               &quot;beings&quot;           
-## [103] &quot;are&quot;               &quot;of&quot;                &quot;hardly&quot;           
-## [106] &quot;any&quot;               &quot;importance&quot;        &quot;in&quot;               
-## [109] &quot;classification&quot;    &quot;why&quot;               &quot;characters&quot;       
-## [112] &quot;derived&quot;           &quot;from&quot;              &quot;rudimentary&quot;      
-## [115] &quot;parts&quot;             &quot;though&quot;            &quot;of&quot;               
-## [118] &quot;no&quot;                &quot;service&quot;           &quot;to&quot;               
-## [121] &quot;the&quot;               &quot;beings&quot;            &quot;are&quot;              
-## [124] &quot;often&quot;             &quot;of&quot;                &quot;high&quot;             
-## [127] &quot;classificatory&quot;    &quot;value&quot;             &quot;and&quot;              
-## [130] &quot;why&quot;               &quot;embryological&quot;     &quot;characters&quot;       
-## [133] &quot;are&quot;               &quot;often&quot;             &quot;the&quot;              
-## [136] &quot;most&quot;              &quot;valuable&quot;          &quot;of&quot;               
-## [139] &quot;all&quot;               &quot;the&quot;               &quot;real&quot;             
-## [142] &quot;affinities&quot;        &quot;of&quot;                &quot;all&quot;              
-## [145] &quot;organic&quot;           &quot;beings&quot;            &quot;in&quot;               
-## [148] &quot;contradistinction&quot; &quot;to&quot;                &quot;their&quot;            
-## [151] &quot;adaptive&quot;          &quot;resemblances&quot;      &quot;are&quot;              
-## [154] &quot;due&quot;               &quot;to&quot;                &quot;inheritance&quot;      
-## [157] &quot;or&quot;                &quot;community&quot;         &quot;of&quot;               
-## [160] &quot;descent&quot;           &quot;the&quot;               &quot;natural&quot;          
-## [163] &quot;system&quot;            &quot;is&quot;                &quot;a&quot;                
-## [166] &quot;genealogical&quot;      &quot;arrangement&quot;       &quot;with&quot;             
-## [169] &quot;the&quot;               &quot;acquired&quot;          &quot;grades&quot;           
-## [172] &quot;of&quot;                &quot;difference&quot;        &quot;marked&quot;           
-## [175] &quot;by&quot;                &quot;the&quot;               &quot;terms&quot;            
-## [178] &quot;varieties&quot;         &quot;species&quot;           &quot;genera&quot;           
-## [181] &quot;families&quot;          &quot;etc&quot;               &quot;and&quot;              
-## [184] &quot;we&quot;                &quot;have&quot;              &quot;to&quot;               
-## [187] &quot;discover&quot;          &quot;the&quot;               &quot;lines&quot;            
-## [190] &quot;of&quot;                &quot;descent&quot;           &quot;by&quot;               
-## [193] &quot;the&quot;               &quot;most&quot;              &quot;permanent&quot;        
-## [196] &quot;characters&quot;        &quot;whatever&quot;          &quot;they&quot;             
-## [199] &quot;may&quot;               &quot;be&quot;                &quot;and&quot;              
-## [202] &quot;of&quot;                &quot;however&quot;           &quot;slight&quot;           
-## [205] &quot;vital&quot;             &quot;importance&quot;</code></pre>
-<pre class="r"><code>#number of unique variables 
+d_no_punctuation &lt;- tolower(gsub(&quot;[[:punct:]]&quot;,&quot;&quot;, d))
+d_converted &lt;- str_remove_all(d_no_punctuation, &quot;[\r\n]&quot;)
+split &lt;- str_split(d_converted, &quot; &quot;) #new vector called split
+
+
+#number of unique variables 
 unique_split &lt;- unique(unlist(split)) 
 length(unique_split)</code></pre>
-<pre><code>## [1] 118</code></pre>
-<pre class="r"><code>#most common word (the)
-sort(table(split),decreasing=TRUE)</code></pre>
+<pre><code>## [1] 1967</code></pre>
+<pre class="r"><code>#most common word 
+head(sort(table(split),decreasing=TRUE), 1)</code></pre>
 <pre><code>## split
-##               the                of               and               are 
-##                15                14                 7                 6 
-##                to        characters            beings            groups 
-##                 6                 5                 4                 4 
-##                in                we               why               all 
-##                 4                 4                 4                 3 
-##        importance                is             often              with 
-##                 3                 3                 3                 3 
-##                 a          adaptive        affinities                be 
-##                 2                 2                 2                 2 
-##                by    classification           descent              have 
-##                 2                 2                 2                 2 
-##              most           natural                on           organic 
-##                 2                 2                 2                 2 
-##               see              that            though            within 
-##                 2                 2                 2                 2 
-##          acquired               any          arranged       arrangement 
-##                 1                 1                 1                 1 
-##                as           between               can           certain 
-##                 1                 1                 1                 1 
-##         character        circuitous             class           classes 
-##                 1                 1                 1                 1 
-##    classificatory         community           complex     contingencies 
-##                 1                 1                 1                 1 
-## contradistinction           derived        difference          discover 
-##                 1                 1                 1                 1 
-##        divergence               due              each     embryological 
-##                 1                 1                 1                 1 
-##               etc           extinct        extinction              fact 
-##                 1                 1                 1                 1 
-##           falling          families               far               few 
-##                 1                 1                 1                 1 
-##               for             forms              from      genealogical 
-##                 1                 1                 1                 1 
-##            genera            grades             great            hardly 
-##                 1                 1                 1                 1 
-##              high               how           however       inheritance 
-##                 1                 1                 1                 1 
-##      intelligible                it               its             lines 
-##                 1                 1                 1                 1 
-##            marked               may              more            mutual 
-##                 1                 1                 1                 1 
-##                no                or            others         paramount 
-##                 1                 1                 1                 1 
-##             parts              past         permanent           present 
-##                 1                 1                 1                 1 
-##        principles              real            recent      resemblances 
-##                 1                 1                 1                 1 
-##       rudimentary              same              seen         selection 
-##                 1                 1                 1                 1 
-##           service       serviceable            slight                so 
-##                 1                 1                 1                 1 
-##           species       subordinate            system             terms 
-##                 1                 1                 1                 1 
-##              than             their            theory             these 
-##                 1                 1                 1                 1 
-##              they          valuable             value         varieties 
-##                 1                 1                 1                 1 
-##             vital          whatever 
-##                 1                 1</code></pre>
+## the 
+## 753</code></pre>
 <pre class="r"><code>#words that appear once
 counts &lt;- table(split)
-(single &lt;- names(counts)[counts == 1])</code></pre>
-<pre><code>##  [1] &quot;acquired&quot;          &quot;any&quot;               &quot;arranged&quot;         
-##  [4] &quot;arrangement&quot;       &quot;as&quot;                &quot;between&quot;          
-##  [7] &quot;can&quot;               &quot;certain&quot;           &quot;character&quot;        
-## [10] &quot;circuitous&quot;        &quot;class&quot;             &quot;classes&quot;          
-## [13] &quot;classificatory&quot;    &quot;community&quot;         &quot;complex&quot;          
-## [16] &quot;contingencies&quot;     &quot;contradistinction&quot; &quot;derived&quot;          
-## [19] &quot;difference&quot;        &quot;discover&quot;          &quot;divergence&quot;       
-## [22] &quot;due&quot;               &quot;each&quot;              &quot;embryological&quot;    
-## [25] &quot;etc&quot;               &quot;extinct&quot;           &quot;extinction&quot;       
-## [28] &quot;fact&quot;              &quot;falling&quot;           &quot;families&quot;         
-## [31] &quot;far&quot;               &quot;few&quot;               &quot;for&quot;              
-## [34] &quot;forms&quot;             &quot;from&quot;              &quot;genealogical&quot;     
-## [37] &quot;genera&quot;            &quot;grades&quot;            &quot;great&quot;            
-## [40] &quot;hardly&quot;            &quot;high&quot;              &quot;how&quot;              
-## [43] &quot;however&quot;           &quot;inheritance&quot;       &quot;intelligible&quot;     
-## [46] &quot;it&quot;                &quot;its&quot;               &quot;lines&quot;            
-## [49] &quot;marked&quot;            &quot;may&quot;               &quot;more&quot;             
-## [52] &quot;mutual&quot;            &quot;no&quot;                &quot;or&quot;               
-## [55] &quot;others&quot;            &quot;paramount&quot;         &quot;parts&quot;            
-## [58] &quot;past&quot;              &quot;permanent&quot;         &quot;present&quot;          
-## [61] &quot;principles&quot;        &quot;real&quot;              &quot;recent&quot;           
-## [64] &quot;resemblances&quot;      &quot;rudimentary&quot;       &quot;same&quot;             
-## [67] &quot;seen&quot;              &quot;selection&quot;         &quot;service&quot;          
-## [70] &quot;serviceable&quot;       &quot;slight&quot;            &quot;so&quot;               
-## [73] &quot;species&quot;           &quot;subordinate&quot;       &quot;system&quot;           
-## [76] &quot;terms&quot;             &quot;than&quot;              &quot;their&quot;            
-## [79] &quot;theory&quot;            &quot;these&quot;             &quot;they&quot;             
-## [82] &quot;valuable&quot;          &quot;value&quot;             &quot;varieties&quot;        
-## [85] &quot;vital&quot;             &quot;whatever&quot;</code></pre>
-<pre class="r"><code>#words that appear more than five times
-(multiple &lt;- names(counts)[counts == 5]) </code></pre>
-<pre><code>## [1] &quot;characters&quot;</code></pre>
+single &lt;- names(counts)[counts == 1]
+length(single)</code></pre>
+<pre><code>## [1] 1014</code></pre>
+<pre class="r"><code>#words that appear five or more times 
+
+five_plus &lt;- names(counts)[counts &gt;= 5]
+length(five_plus)</code></pre>
+<pre><code>## [1] 362</code></pre>
 <pre class="r"><code>#extract final paragraph and assign to new variable
 final_quote &lt;-d[56,]
 (split_quote &lt;- unlist(str_split(final_quote, &quot; &quot;)))</code></pre>
@@ -499,7 +347,9 @@ final_quote &lt;-d[56,]
 ## [65] &quot;are&quot;           &quot;and&quot;           &quot;and&quot;           &quot;and&quot;          
 ## [69] &quot;and&quot;           &quot;almost&quot;        &quot;according&quot;     &quot;a&quot;            
 ## [73] &quot;a&quot;             &quot;a&quot;</code></pre>
-<p>##Challenge 2</p>
+</div>
+<div id="challenge-2" class="section level2">
+<h2>Challenge 2</h2>
 <pre class="r"><code>t &lt;- c(35, 88, 42, 84, 81, 30)
 city &lt;- c(&quot;Bejing&quot;, &quot;Lagos&quot;, &quot;Paris&quot;, &quot;Rio de Janeiro&quot;, &quot;San Juan&quot;, &quot;Toronto&quot;)
 
@@ -517,64 +367,65 @@ print(t)</code></pre>
 (t[c(3, 5)])</code></pre>
 <pre><code>##    Paris San Juan 
 ##       42       81</code></pre>
-<p>##Challenge 3</p>
+</div>
+<div id="challenge-3" class="section level2">
+<h2>Challenge 3</h2>
 <pre class="r"><code>#Challenge 3a
 m1 &lt;- matrix(
-  data = c(159:1),
+  data = c(160:1),
   nrow = 8, 
   ncol = 20,
   byrow = FALSE
-)</code></pre>
-<pre><code>## Warning in matrix(data = c(159:1), nrow = 8, ncol = 20, byrow = FALSE): data
-## length [159] is not a sub-multiple or multiple of the number of rows [8]</code></pre>
-<pre class="r"><code>m1</code></pre>
+)
+m1</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]  159  151  143  135  127  119  111  103   95    87    79    71    63    55
-## [2,]  158  150  142  134  126  118  110  102   94    86    78    70    62    54
-## [3,]  157  149  141  133  125  117  109  101   93    85    77    69    61    53
-## [4,]  156  148  140  132  124  116  108  100   92    84    76    68    60    52
-## [5,]  155  147  139  131  123  115  107   99   91    83    75    67    59    51
-## [6,]  154  146  138  130  122  114  106   98   90    82    74    66    58    50
-## [7,]  153  145  137  129  121  113  105   97   89    81    73    65    57    49
-## [8,]  152  144  136  128  120  112  104   96   88    80    72    64    56    48
+## [1,]  160  152  144  136  128  120  112  104   96    88    80    72    64    56
+## [2,]  159  151  143  135  127  119  111  103   95    87    79    71    63    55
+## [3,]  158  150  142  134  126  118  110  102   94    86    78    70    62    54
+## [4,]  157  149  141  133  125  117  109  101   93    85    77    69    61    53
+## [5,]  156  148  140  132  124  116  108  100   92    84    76    68    60    52
+## [6,]  155  147  139  131  123  115  107   99   91    83    75    67    59    51
+## [7,]  154  146  138  130  122  114  106   98   90    82    74    66    58    50
+## [8,]  153  145  137  129  121  113  105   97   89    81    73    65    57    49
 ##      [,15] [,16] [,17] [,18] [,19] [,20]
-## [1,]    47    39    31    23    15     7
-## [2,]    46    38    30    22    14     6
-## [3,]    45    37    29    21    13     5
-## [4,]    44    36    28    20    12     4
-## [5,]    43    35    27    19    11     3
-## [6,]    42    34    26    18    10     2
-## [7,]    41    33    25    17     9     1
-## [8,]    40    32    24    16     8   159</code></pre>
+## [1,]    48    40    32    24    16     8
+## [2,]    47    39    31    23    15     7
+## [3,]    46    38    30    22    14     6
+## [4,]    45    37    29    21    13     5
+## [5,]    44    36    28    20    12     4
+## [6,]    43    35    27    19    11     3
+## [7,]    42    34    26    18    10     2
+## [8,]    41    33    25    17     9     1</code></pre>
 <pre class="r"><code>#extract single element
 m1[5, 2]</code></pre>
-<pre><code>## [1] 147</code></pre>
+<pre><code>## [1] 148</code></pre>
 <pre class="r"><code>#extract rows
 m1[5:7, ]</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
-## [1,]  155  147  139  131  123  115  107   99   91    83    75    67    59    51
-## [2,]  154  146  138  130  122  114  106   98   90    82    74    66    58    50
-## [3,]  153  145  137  129  121  113  105   97   89    81    73    65    57    49
+## [1,]  156  148  140  132  124  116  108  100   92    84    76    68    60    52
+## [2,]  155  147  139  131  123  115  107   99   91    83    75    67    59    51
+## [3,]  154  146  138  130  122  114  106   98   90    82    74    66    58    50
 ##      [,15] [,16] [,17] [,18] [,19] [,20]
-## [1,]    43    35    27    19    11     3
-## [2,]    42    34    26    18    10     2
-## [3,]    41    33    25    17     9     1</code></pre>
+## [1,]    44    36    28    20    12     4
+## [2,]    43    35    27    19    11     3
+## [3,]    42    34    26    18    10     2</code></pre>
 <pre class="r"><code>#extract and create new variable
 m2 &lt;- m1[3:6, 4:9]
 m2</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
-## [1,]  133  125  117  109  101   93
-## [2,]  132  124  116  108  100   92
-## [3,]  131  123  115  107   99   91
-## [4,]  130  122  114  106   98   90</code></pre>
+## [1,]  134  126  118  110  102   94
+## [2,]  133  125  117  109  101   93
+## [3,]  132  124  116  108  100   92
+## [4,]  131  123  115  107   99   91</code></pre>
 <pre class="r"><code>#class and mode of m2
-class(m2)</code></pre>
+(class(m2))</code></pre>
 <pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
-<pre class="r"><code>mode(m2)</code></pre>
+<pre class="r"><code>(mode(m2))</code></pre>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>#Challenge 3b 
-
-d &lt;- seq(from = 2, to = 800, by = 2)
+</div>
+<div id="challenge-4" class="section level2">
+<h2>Challenge 4</h2>
+<pre class="r"><code>d &lt;- seq(from = 2, to = 800, by = 2)
 a &lt;- array(data = d, dim = c(5, 5, 4, 4), dimnames = NULL)
 a</code></pre>
 <pre><code>## , , 1, 1
@@ -720,34 +571,35 @@ a</code></pre>
 ## [3,]  756  766  776  786  796
 ## [4,]  758  768  778  788  798
 ## [5,]  760  770  780  790  800</code></pre>
-<pre class="r"><code>a[1, 1, 1, 2]</code></pre>
+<pre class="r"><code>(a[1, 1, 1, 2])</code></pre>
 <pre><code>## [1] 202</code></pre>
-<pre class="r"><code>a[2, 3, 2, ]</code></pre>
+<pre class="r"><code>(a[2, 3, 2, ])</code></pre>
 <pre><code>## [1]  74 274 474 674</code></pre>
-<pre class="r"><code>a[1:5, 1:5, 3, 3]</code></pre>
+<pre class="r"><code>(a[1:5, 1:5, 3, 3])</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]  502  512  522  532  542
 ## [2,]  504  514  524  534  544
 ## [3,]  506  516  526  536  546
 ## [4,]  508  518  528  538  548
 ## [5,]  510  520  530  540  550</code></pre>
-<p>##Challenge 4</p>
+</div>
+<div id="challenge-5" class="section level2">
+<h2>Challenge 5</h2>
 <pre class="r"><code>#creating a list called Primates 
 Primates &lt;- list(Strepsirhini = list(Lorisiformes = list(Lorisidae = c(&quot;Lorisidae&quot;, &quot;Galagidae&quot;)),
                                    Lemuriformes = list(Lorisoidae = c(&quot;Cheirogaleidae&quot;, &quot;Lepilemuridae&quot;, &quot;Indriidae&quot;, &quot;Lemuridae&quot;, &quot;Daubentoniidae&quot;))),
                  Haplorhini = list(Tarsiiformes = list(Tarsioidea = &quot;Tarsiidae&quot;),
                                   Simiiformes = list(Platyrrhini = list(Ceboidea = c(&quot;Cebidae&quot;, &quot;Atelidae&quot;, &quot;Pitheciidae&quot;)),
-                                                     Catarrhin = list(Hominoidae = c(&quot;Hylobatidae&quot;, &quot;Hominidae&quot;), &quot;Cercopithecoidae&quot; = &quot;Cercopithecidae&quot;)))
+                                                     Catarrhini = list(Hominoidae = c(&quot;Hylobatidae&quot;, &quot;Hominidae&quot;), &quot;Cercopithecoidae&quot; = &quot;Cercopithecidae&quot;)))
 )
 
 #New World Monkeys 
-nwm &lt;- Primates[[&quot;Haplorhini&quot;]][[&quot;Simiiformes&quot;]][[&quot;Platyrrhini&quot;]]
-nwm</code></pre>
+(nwm &lt;- Primates[[&quot;Haplorhini&quot;]][[&quot;Simiiformes&quot;]][[&quot;Platyrrhini&quot;]])</code></pre>
 <pre><code>## $Ceboidea
 ## [1] &quot;Cebidae&quot;     &quot;Atelidae&quot;    &quot;Pitheciidae&quot;</code></pre>
-<pre class="r"><code>class(nwm) #is a list </code></pre>
+<pre class="r"><code>class(nwm)</code></pre>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<pre class="r"><code>mode(nwm) #is a list </code></pre>
+<pre class="r"><code>mode(nwm) </code></pre>
 <pre><code>## [1] &quot;list&quot;</code></pre>
 <pre class="r"><code>#Extracting the tarisers 
 Primates$Haplorhini$Tarsiiformes$Tarsioidea</code></pre>

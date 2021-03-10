@@ -3,6 +3,7 @@ title: 'Homework #1'
 author: "Alana Pengilley"
 date: "01/03/2021"
 output:
+  word_document: default
   html_document: default
   pdf_document: default
 ---
@@ -21,33 +22,35 @@ d <- read.delim(f, header = TRUE, sep = "\n", stringsAsFactors = FALSE, fill = T
 
 (dim(d)) #to show how many paragraphs/rows there are (n=56)
 
-(r <- unlist(d[34,])) #converting row 34 into a vector and printing 
 
-#splitting 34th row 
+#print 34th row 
+d[34, ]
 
+
+#splitting the whole chapter 
 library(stringr)
 
-r34 <- tolower(gsub("[[:punct:]]","", r))
-split <- str_split(r34_lower, " ")
-split
+d_no_punctuation <- tolower(gsub("[[:punct:]]","", d))
+d_converted <- str_remove_all(d_no_punctuation, "[\r\n]")
+split <- str_split(d_converted, " ") #new vector called split
 
 
 #number of unique variables 
 unique_split <- unique(unlist(split)) 
 length(unique_split)
 
-#most common word (the)
-sort(table(split),decreasing=TRUE)
-
+#most common word 
+head(sort(table(split),decreasing=TRUE), 1)
 
 #words that appear once
 counts <- table(split)
-(single <- names(counts)[counts == 1])
+single <- names(counts)[counts == 1]
+length(single)
 
-#words that appear more than five times
+#words that appear five or more times 
 
-
-
+five_plus <- names(counts)[counts >= 5]
+length(five_plus)
 
 
 #extract final paragraph and assign to new variable
@@ -107,8 +110,11 @@ m2
 (class(m2))
 (mode(m2))
 
-#Challenge 3b 
+```
+## Challenge 4
 
+
+``` {R}
 d <- seq(from = 2, to = 800, by = 2)
 a <- array(data = d, dim = c(5, 5, 4, 4), dimnames = NULL)
 a
@@ -121,7 +127,7 @@ a
 
 ```
 
-## Challenge 4 
+## Challenge 5
 
 ``` {r}
 #creating a list called Primates 
@@ -129,7 +135,7 @@ Primates <- list(Strepsirhini = list(Lorisiformes = list(Lorisidae = c("Lorisida
                                    Lemuriformes = list(Lorisoidae = c("Cheirogaleidae", "Lepilemuridae", "Indriidae", "Lemuridae", "Daubentoniidae"))),
                  Haplorhini = list(Tarsiiformes = list(Tarsioidea = "Tarsiidae"),
                                   Simiiformes = list(Platyrrhini = list(Ceboidea = c("Cebidae", "Atelidae", "Pitheciidae")),
-                                                     Catarrhin = list(Hominoidae = c("Hylobatidae", "Hominidae"), "Cercopithecoidae" = "Cercopithecidae")))
+                                                     Catarrhini = list(Hominoidae = c("Hylobatidae", "Hominidae"), "Cercopithecoidae" = "Cercopithecidae")))
 )
 
 #New World Monkeys 
